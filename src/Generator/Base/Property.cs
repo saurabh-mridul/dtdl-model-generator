@@ -43,6 +43,8 @@ internal abstract class Property : Writable
 
     internal string Name { get => name; set => name = ConvertToProtobufNamingConvention(value); }
 
+    internal int FieldNumber { get; set; }
+
     internal string JsonName { get; set; } = string.Empty;
 
     internal string? DictionaryPatchType { get; set; }
@@ -71,7 +73,7 @@ internal abstract class Property : Writable
         Setter = new PropertySetter(options);
     }
 
-    internal virtual void WriteTo(StreamWriter streamWriter, int fieldNumber)
+    internal virtual void WriteTo(StreamWriter streamWriter)
     {
         foreach (var producedEntity in ProducedEntities)
         {
@@ -94,7 +96,7 @@ internal abstract class Property : Writable
 
         //var nullable = Nullable ? "?" : string.Empty;
         //streamWriter.Write($"{indent}{indent}public {Type}{nullable} {Name}");
-        streamWriter.WriteLine($"{indent}{Type} {Name} = {fieldNumber};");
+        streamWriter.WriteLine($"{indent}{Type} {Name} = {FieldNumber};");
 
         // If bodies exist, then add newlines to format.
         //if (hasBodies)

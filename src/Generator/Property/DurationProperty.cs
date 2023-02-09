@@ -9,13 +9,14 @@ internal class DurationProperty : Property
     {
         Name = entity.Name;
         JsonName = entity.Name;
+        FieldNumber = int.TryParse(entity.Comment, out int fieldNumber) ? fieldNumber : int.MinValue;
         Obsolete = entity.IsObsolete();
         Type = "TimeSpan?";
     }
 
-    internal override void WriteTo(StreamWriter streamWriter, int fieldNumber)
+    internal override void WriteTo(StreamWriter streamWriter)
     {
         streamWriter.WriteLine($"{indent}{indent}[JsonConverter(typeof(DurationConverter))]");
-        base.WriteTo(streamWriter, fieldNumber);
+        base.WriteTo(streamWriter);
     }
 }

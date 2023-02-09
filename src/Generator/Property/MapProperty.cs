@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+using Microsoft.Azure.DigitalTwins.Parser;
+
 namespace Microsoft.DigitalWorkplace.DigitalTwins.Models.Generator;
 
 internal class MapProperty : Property
@@ -30,10 +32,11 @@ internal class MapProperty : Property
         }
 
         Type = $"map<{mapKey?.TrimEnd('?')}, {mapValue?.TrimEnd('?')}>";
+        FieldNumber = int.TryParse(entity.Comment, out int fieldNumber) ? fieldNumber : int.MinValue;
         Obsolete = entity.IsObsolete();
     }
 
-    internal override void WriteTo(StreamWriter streamWriter, int fieldNumber)
+    internal override void WriteTo(StreamWriter streamWriter)
     {
         //if (mapValue == nameof(TimeSpan))
         //{
@@ -45,6 +48,6 @@ internal class MapProperty : Property
         //    streamWriter.WriteLine($"{indent}{indent}[JsonConverter(typeof(MapDateOnlyConverter))]");
         //}
 
-        base.WriteTo(streamWriter, fieldNumber);
+        base.WriteTo(streamWriter);
     }
 }

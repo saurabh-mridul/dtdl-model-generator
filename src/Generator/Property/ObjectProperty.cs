@@ -16,6 +16,7 @@ internal class ObjectProperty : Property
 
         var objectEntity = new ObjectEntity(entityInfo, objectInfo, enclosingClass, options);
         Type = $"{objectEntity.Name}?";
+        FieldNumber = int.TryParse(entityInfo.Comment, out int fieldNumber) ? fieldNumber : int.MinValue;
         Obsolete = entityInfo.IsObsolete();
         ProducedEntities.Add(objectEntity);
     }

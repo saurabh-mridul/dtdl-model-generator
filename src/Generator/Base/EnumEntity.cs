@@ -11,7 +11,6 @@ internal class EnumEntity : Entity
 
     protected override void WriteSignature(StreamWriter streamWriter)
     {
-        //WriteStringEnumConverterAttribute(streamWriter);
         streamWriter.WriteLine($"enum {Name}");
     }
 

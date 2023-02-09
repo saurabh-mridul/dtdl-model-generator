@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-using Microsoft.Azure.DigitalTwins.Parser;
-
 namespace Microsoft.DigitalWorkplace.DigitalTwins.Models.Generator;
 
 internal class EnumPropEntity : EnumEntity
@@ -34,7 +32,6 @@ internal class EnumPropEntity : EnumEntity
 
     protected override void WriteContent(StreamWriter streamWriter)
     {
-        var index = 0;
         foreach (var enumValue in EnumInfo.EnumValues)
         {
             const string en = nameof(en);
@@ -46,15 +43,8 @@ internal class EnumPropEntity : EnumEntity
             }
 
             var currentEnumValue = ConvertEnumValueToProtobufNamingConvention($"{Name}{enumValue.EnumValue}");
-            if (!string.IsNullOrEmpty(enumValue.Comment) && int.TryParse(enumValue.Comment, out int enumIndex))
-            {
-                streamWriter.WriteLine($"{indent}{currentEnumValue} = {enumIndex}{";"}");
-            }
-            else
-            {
-                streamWriter.WriteLine($"{indent}{currentEnumValue} = {index}{";"}");
-                index++;
-            }
+            var fieldNumber = int.TryParse(enumValue.Comment, out _) ? int.Parse(enumValue.Comment) : int.MinValue;
+            streamWriter.WriteLine($"{indent}{currentEnumValue} = {fieldNumber}{";"}");
         }
     }
 

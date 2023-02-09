@@ -18,6 +18,7 @@ internal class PrimitiveProperty : Property
 
         Type = type ?? string.Empty;
         Name = JsonName = entity.Name;
+        FieldNumber = int.TryParse(entity.Comment, out int fieldNumber) ? fieldNumber : int.MinValue;
         Obsolete = entity.IsObsolete();
     }
 }

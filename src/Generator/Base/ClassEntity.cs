@@ -86,7 +86,8 @@ internal abstract class ClassEntity : Entity
 
         if (content is DTRelationshipInfo relationship)
         {
-            return null; //new RelationshipProperty(relationship, Options);
+            //return new RelationshipProperty(relationship, Options);
+            return null;
         }
 
         throw new Exception($"Unsupported content type: {content.EntityKind}");
@@ -109,11 +110,9 @@ internal abstract class ClassEntity : Entity
 
     protected virtual void WriteProperties(StreamWriter streamWriter)
     {
-        var count = 1;
-
         foreach (var property in Content)
         {
-            property.WriteTo(streamWriter, count++);
+            property.WriteTo(streamWriter);
         }
     }
 

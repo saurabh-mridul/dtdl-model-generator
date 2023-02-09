@@ -11,6 +11,7 @@ internal class RelationshipProperty : Property
         var relationshipCollectionEntity = new RelationshipCollectionEntity(relationship, options);
         Type = relationshipCollectionEntity.Name;
         Name = relationship.Name;
+        FieldNumber = int.TryParse(relationship.Comment, out int fieldNumber) ? fieldNumber : int.MinValue;
         JsonIgnore = true;
         Initialized = true;
         Obsolete = relationship.IsObsolete();
